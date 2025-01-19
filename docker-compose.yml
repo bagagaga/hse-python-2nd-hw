@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  bot:
+    build: .
+    container_name: telegram_bot
+    env_file:
+      - ./bot.env  # Загружаем переменные окружения из bot.env
+    volumes:
+      - ./data:/app/data  # Монтируем папку data для хранения данных
+      - ./db:/app/db      # Монтируем папку db для хранения файла базы данных SQLite
+    ports:
+      - "8000:8000"  # Пример проброса портов (если необходимо)
+    restart: always
+    working_dir: /app  # Убедитесь, что рабочая директория установлена правильно
