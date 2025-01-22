@@ -56,6 +56,7 @@ class FoodLogState(StatesGroup):
 async def set_profile_handler(message: types.Message, state: FSMContext):
     await message.answer("Введите ваш вес (в кг):")
     await state.set_state(ProfileSetup.weight)
+    logger.info(f"User {message.from_user.id} requested /set_profile")
 
 
 @router.message(ProfileSetup.weight)
@@ -288,6 +289,7 @@ async def handle_update_confirmation(
 
 @router.message(Command("log_water"))
 async def log_water_handler(message: types.Message):
+    logger.info(f"User {message.from_user.id} requested /log_water")
     try:
         match = re.search(r"[-+]?\d*[\.,]?\d+", message.text)
         if match:
@@ -325,6 +327,7 @@ async def log_water_handler(message: types.Message):
 async def log_food_handler(
     message: types.Message, command: CommandObject, state: FSMContext
 ):
+    logger.info(f"User {message.from_user.id} requested /log_food")
     food_name = command.args.strip() if command.args else None
 
     if not food_name:
@@ -382,6 +385,7 @@ async def handle_invalid_food_amount(message: types.Message, state: FSMContext):
 
 @router.message(Command("log_workout"))
 async def log_workout_handler(message: types.Message):
+    logger.info(f"User {message.from_user.id} requested /log_workout")
     args = message.text.removeprefix("/log_workout").strip().split()
     if len(args) < 2:
         await message.answer(
@@ -421,6 +425,7 @@ async def log_workout_handler(message: types.Message):
 @router.message(Command("check_progress"))
 async def check_progress_handler(message: types.Message):
     try:
+        logger.info(f"User {message.from_user.id} requested /check_progress")
         user_summary = get_daily_summary(message.from_user.id)
 
         total_calories_consumed = user_summary.get("total_calories_consumed", 0)
