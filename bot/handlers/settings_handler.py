@@ -149,7 +149,7 @@ async def set_city(message: types.Message, state: FSMContext):
             reply_markup=keyboard_calorie_goal,
         )
     except ValueError:
-        await waiting_message.edit_text(
+        await message.answer(
             "🚫 Не можем найти такой город. Пожалуйста, попробуйте еще раз."
         )
 
