@@ -3,3 +3,4 @@ python-dotenv
 loguru
 pytest
 sqlalchemy
+requests
